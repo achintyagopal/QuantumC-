@@ -1,0 +1,38 @@
+CC=g++-6 -g -O3 -fopenmp
+CXX= g++-6 -g -O3 -fopenmp
+CXXFLAGS = -Wall
+
+grover:  grover.o Gate.o QMem.o Control.o UnionFind.o PhaseShift.o PauliY.o PauliX.o PauliZ.o Hadamard.o
+
+grover.o: grover.cpp QMem.o Control.o UnionFind.o PhaseShift.o PauliY.o PauliX.o PauliZ.o Hadamard.o
+	$(CXX) -c grover.cpp
+
+QMem.o: src/QMem.cpp UnionFind.o
+	$(CXX) -c src/QMem.cpp
+
+Control.o: src/gates/Control.cpp UnionFind.o
+	$(CXX) -c src/gates/Control.cpp
+
+UnionFind.o: src/UnionFind.cpp
+	$(CXX) -c src/UnionFind.cpp
+
+PhaseShift.o: src/unarygates/PhaseShift.cpp
+	$(CXX) -c src/unarygates/PhaseShift.cpp
+
+PauliZ.o: src/unarygates/PauliZ.cpp
+	$(CXX) -c src/unarygates/PauliZ.cpp
+
+PauliY.o: src/unarygates/PauliY.cpp
+	$(CXX) -c src/unarygates/PauliY.cpp
+
+PauliX.o: src/unarygates/PauliX.cpp
+	$(CXX) -c src/unarygates/PauliX.cpp
+
+Hadamard.o: src/unarygates/Hadamard.cpp
+	$(CXX) -c src/unarygates/Hadamard.cpp
+
+Gate.o: src/gates/Gate.cpp
+	$(CXX) -c src/gates/Gate.cpp		
+
+clean:
+	rm *.o
